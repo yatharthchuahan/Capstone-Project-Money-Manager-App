@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Manager App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💰 Money Manager</h1>
+            <p>Track your income and expenses (₹ INR)</p>
+        </div>
+
+        <div class="dashboard">
+            <div class="summary-card income">
+                <h3>Total Income</h3>
+                <div class="amount" id="totalIncome">₹0.00</div>
+            </div>
+            <div class="summary-card expense">
+                <h3>Total Expenses</h3>
+                <div class="amount" id="totalExpenses">₹0.00</div>
+            </div>
+            <div class="summary-card balance">
+                <h3>Net Balance</h3>
+                <div class="amount" id="netBalance">₹0.00</div>
+            </div>
+        </div>
+
+        <button class="add-btn" onclick="app.showAddForm()">➕ Add New Transaction</button>
+
+        <div class="transactions-section">
+            <div class="filters">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+                <select id="subCategoryFilter">
+                    <option value="">All Sub-Categories</option>
+                </select>
+                <input type="date" id="dateFrom">
+                <input type="date" id="dateTo">
+                <select id="sortBy">
+                    <option value="date-desc">Date (Newest)</option>
+                    <option value="date-asc">Date (Oldest)</option>
+                    <option value="amount-desc">Amount (Highest)</option>
+                    <option value="amount-asc">Amount (Lowest)</option>
+                </select>
+                <button class="btn btn-primary" onclick="app.applyFilters()">Filter</button>
+                <button class="btn btn-secondary" onclick="app.clearFilters()">Clear</button>
+            </div>
+
+            <table class="transactions-table" id="transactionsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Sub-Category</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="transactionsBody">
+                    <tr>
+                        <td colspan="6" class="no-transactions">No transactions yet. Add your first transaction!</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Transaction Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="app.closeModal()">&times;</span>
+            <h2 id="modalTitle">Add Transaction</h2>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label>Amount (₹):</label>
+                    <input type="number" id="amount" step="0.01" required min="0.01">
+                    <div class="error-message" id="amountError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Date:</label>
+                    <input type="date" id="date" required>
+                    <div class="error-message" id="dateError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Category:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="category" value="Income" required> Income</label>
+                        <label><input type="radio" name="category" value="Expense" required> Expense</label>
+                    </div>
+                    <div class="error-message" id="categoryError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Sub-Category:</label>
+                    <select id="subCategory" required>
+                        <option value="">Select Sub-Category</option>
+                    </select>
+                    <div class="error-message" id="subCategoryError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description (Optional):</label>
+                    <textarea id="description" maxlength="100" rows="3"></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="app.closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Transaction</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
